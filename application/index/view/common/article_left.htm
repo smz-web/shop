@@ -1,0 +1,24 @@
+<div class="article-side">
+            <dl class="article-menu">
+                <dt class="am-t"><a href="#">文章分类列表</a></dt>
+                {volist name="cate_info" id="vo"}
+                {if condition="$vo['pid'] eq 0"}
+                <dd class="am-c">
+<div class="menu-item active">
+    <div class="item-hd"><a href="{:url('listing',['id'=>$vo['id']])}">{$vo.cate_name}</a><i class="iconfont icon-up"></i></div>
+        <ul class="item-bd">
+            </ul>
+        <ul class="item-bd">
+                <?php
+                foreach($cate_info as $k=>$v){
+                if($v['pid']==$vo['id']){ ?>
+                <li><a href="{:url('listing',['id'=>$v['id']])}">{$v.cate_name} </a></li>
+                <?php }} ?>
+            </ul>
+    </div>
+                </dd>
+                {/if}
+                {/volist}
+                
+            </dl>
+</div>

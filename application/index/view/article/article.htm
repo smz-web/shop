@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="童攀课堂-php课堂-www.tongpankt.com" />
+<meta name="Description" content="童攀课堂-php课堂-www.tongpankt.com" />
+<title>交流群：383432579</title>
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="stylesheet" type="text/css" href="index__src/css/base.css" />
+<link rel="stylesheet" type="text/css" href="index__src/css/style.css" />
+<link rel="stylesheet" type="text/css" href="index__src/css/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="index__src/css/purebox.css" />
+<link rel="stylesheet" type="text/css" href="index__src/css/quickLinks.css" />
+<script type="text/javascript" src="index__src/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="index__src/js/jquery.json.js"></script><script type="text/javascript" src="index__src/js/transport_jquery.js"></script>
+</head>
+<body class="bg-ligtGary">
+{include file="common/top"}
+<div class="content article-content">
+    <div class="w w1200 clearfix">
+        {include file="common/article_left"}
+        <div class="article-main">
+            <!-- 面包屑导航 -->
+            <div class="am-hd">
+                <h2>{$own_info.title}</h2>
+                <div class="extra">
+                    <a href="{:url('index/index/index')}">首页</a>
+    <i>&gt;</i>
+                    {volist name="navigation" id="vo"}
+	    <a href="{:url('listing',['id'=>$vo['id']])}">{$vo.cate_name}</a>
+    <i>&gt;</i>
+    {/volist}
+            <span>{$own_info.title}</span>
+    </div>
+            </div>
+            <!-- 面包屑导航 -->
+            <div class="am-bd">
+                <div class="article-words">
+                    {$own_info.content}
+</div>                </div>
+				
+<div class="no_records no_comments_qt">
+    <i class="no_icon no_icon_three"></i>
+    <!-- <span class="block">暂无评价</span> -->
+</div>
+<!-- <div class="discuss-left">
+<form method="post" action="article.php" id="theFrom">
+<div class="review-form" id="doPost" name="doPost"> -->
+    <!-- <div style="padding-bottom:20px; margin-left:5px; color:#888;">作者：</div> -->
+	<!-- <div class="r-u-name">
+		<div class="u-ico"><img src="index__src/img/avatar.png"></div>
+		<span>发表评论</span>
+	</div>
+	<div class="item">
+		<div class="item-label"><em class="red">*</em>&nbsp;内容：</div>
+		<div class="item-value">
+			<textarea class="textarea" id="test_content" name="content"></textarea>
+			<div class="form_prompt"></div>
+		</div>
+	</div>
+	<div class="item">
+		<div class="item-label">&nbsp;</div>
+		<div class="item-value">
+			<input type="hidden" name="act" value="add_comment" />
+			<input type="hidden" name="article_id" value="36" />	
+			<input type="hidden" name="user_id" value="0" />				
+			<input type="button" class="btn sc-redBg-btn" ectype="submit" value="发表">
+		</div>
+	</div> -->
+<!-- </div>
+</form>
+</div> -->
+<script type="text/javascript" src="index__src/img/js/jquery.purebox.js"></script>
+<!-- <script type="text/javascript">
+	$(function(){
+		$('.comment_nice').click(function(){
+			var T = $(this);
+			var comment_id = T.data('commentid');
+			var goods_id = T.data('idvalue');
+			var type = 'comment';
+			
+			Ajax.call('comment.php', 'act=add_useful&id=' + comment_id + '&goods_id=' + goods_id + '&type=' + type, niceResponse, 'GET', 'JSON');
+		});
+	});
+	function niceResponse(res){
+		if(res.err_no == 1){
+			var back_url = res.url;
+			$.notLogin("get_ajax_content.php?act=get_login_dialog",back_url);
+			return false;
+		}else if(res.err_no == 0){
+			$(".reply-nice" + res.id).html(res.useful);
+            $(".comment_nice").addClass("selected");
+		}
+	}
+	
+	$(document).on("click","[ectype='submit']",function(){		
+		var user_id = $("input[name='user_id']").val();
+		var article_id = $("input[name='article_id']").val();
+		//判断是否登录
+		if(user_id == 0){
+			var back_url = "article.php?id=" + article_id;
+			$.notLogin("get_ajax_content.php?act=get_login_dialog",back_url);
+			return false;
+		}
+			
+		var content = $("#test_content").val();
+		if(!content){
+			var message = "评论内容不能为空！";
+			pbDialog(message,"",0);
+			return false;
+		}else{
+			Ajax.call('article.php', 'act=add_comment&content=' + content + '&article_id=' + article_id, function(data){
+					if(data.error){
+pbDialog(data.message,"",0);
+					}else{
+pbDialog(data.message,"",1,'','','',true,function(){location.reload();});					
+					}
+			}, 'GET', 'JSON');
+		}		
+	})
+</script>            -->   
+ <!--  <div class="more_article">
+<span class="art_prev">
+        上一篇：<a href="#" >订购方式</a>
+    </span>
+<span class="art_next">
+    </span> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="common/foot"}
+ 
+</div>
+<script type="text/javascript" src="index__src/js/suggest.js"></script>
+<script type="text/javascript" src="index__src/js/scroll_city.js"></script>
+<script type="text/javascript" src="index__src/js/utils.js"></script>
+<script type="text/javascript" src="index__src/js/warehouse.js"></script>
+<script type="text/javascript" src="index__src/js/warehouse_area.js"></script>
+<script type="text/javascript" src="index__src/js/jquery.SuperSlide.2.1.1.js"></script>
+<script type="text/javascript" src="index__src/js/dsc-common.js"></script>
+<script type="text/javascript">
+$(function(){
+    $(".article-side .side-goods").slide({
+        effect: 'leftLoop'
+    });
+});
+</script>
+</body>
+</html>

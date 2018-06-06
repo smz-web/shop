@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html><head>
+	    <meta charset="utf-8">
+    <title>淘淘后台管理系统</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="admin__src/style/bootstrap.css" rel="stylesheet">
+    <link href="admin__src/style/font-awesome.css" rel="stylesheet">
+    <link href="admin__src/style/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="admin__src/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="admin__src/style/demo.css" rel="stylesheet">
+    <link href="admin__src/style/typicons.css" rel="stylesheet">
+    <link href="admin__src/style/animate.css" rel="stylesheet">
+    
+</head>
+<body>
+	<!-- 头部 -->
+	{include file="common/top"}
+	<!-- /头部 -->
+	
+	<div class="main-container container-fluid">
+		<div class="page-container">
+			            <!-- Page Sidebar -->
+           {include file="common/left"}
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                                        <li>
+                        <a href="{:url('admin/home/index')}">控制面板</a>
+                    </li>
+                                        <li>
+                        <a href="{:url('lists')}">栏目关联管理</a>
+                    </li>
+                                        <li class="active">修改栏目关联</li>
+                                        </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+                    
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-blue">
+                <span class="widget-caption">修改栏目关联</span>
+            </div>
+            <div class="widget-body">
+                <div id="horizontal-form">
+                    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+                        <input name="id" value="{$oneself.id}" type="hidden">
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">所属商品栏目</label>
+                            <div class="col-sm-6">
+                                <select required="" name="category_id">
+                                    {volist name="info" id="vo"}
+                                    <option {if condition="$oneself['category_id'] eq $vo['id']"}selected="selected"{/if} value="{$vo.id}">{$vo.cate_name}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">栏目关联名称</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" id="username" placeholder="" name="relation_name" value="{$oneself.relation_name}" required="" type="text">
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">栏目关联URL</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" id="username" placeholder="" name="relation_link" value="{$oneself.relation_link}" type="text">
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div> 
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">打开方式</label>
+                            <div class="col-sm-6">
+                                <div class="radio">
+                                        <label>
+                                            <input {if condition="$oneself['relation_target'] eq 1"}checked="checked"{/if} name="relation_target"  class="colored-blue" value="1" type="radio">
+                                            <span class="text">当前页面</span>
+                                        </label>
+                                        <label>
+                                            <input {if condition="$oneself['relation_target'] eq 2"}checked="checked"{/if} name="relation_target" value="2" class="colored-blue" type="radio">
+                                            <span class="text">新窗口</span>
+                                        </label>
+                                </div>
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">关联图片</label>
+                            <div class="col-sm-6">
+                                <input type="file" name="relation_img">
+                                {if condition="$oneself['relation_img'] neq ''"}
+                                    <br />
+                                    <img src="FILE_RELATION{$oneself['relation_img']}" width="100px" height="100px" >
+                                    &nbsp; <a text_id="{$oneself.id}" onclick="ajax_del(this)" style="cursor:pointer;">删除</a>
+                                {/if}
+                            </div>
+                        </div> 
+                        <div class="form-group" >
+                            <label for="username" class="col-sm-2 control-label no-padding-right">关联类型</label>
+                            <div class="col-sm-6">
+                                <div class="radio">
+                                        <label>
+                                            <input disabled="disabled" {if condition="$oneself['relation_type'] eq 1"}checked="checked"{/if} name="relation_type" class="colored-blue" value="1" type="radio">
+                                            <span class="text">词推荐</span>
+                                        </label>
+                                        <label>
+                                            <input disabled="disabled" {if condition="$oneself['relation_type'] eq 2"}checked="checked"{/if} name="relation_type" value="2" class="colored-blue" type="radio">
+                                            <span class="text">图推荐</span>
+                                        </label>
+                                        <label>
+                                            <input disabled="disabled" {if condition="$oneself['relation_type'] eq 3"}checked="checked"{/if} name="relation_type" value="3" class="colored-blue" type="radio">
+                                            <span class="text">图广告</span>
+                                        </label>
+                                </div>
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">排序</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" id="username" value="{$oneself.relation_sort}" placeholder="" name="relation_sort"  type="text">
+                            </div>
+                        </div> 
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">保存信息</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+		</div>	
+	</div>
+
+	    <!--Basic Scripts-->
+    <script src="admin__src/style/jquery_002.js"></script>
+    <script src="admin__src/style/bootstrap.js"></script>
+    <script src="admin__src/style/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="admin__src/style/beyond.js"></script>
+    <script type="text/javascript">
+        function ajax_del(t){
+            var text_id=$(t).attr("text_id");
+            $.post(
+                "{:url('ajax_del')}",
+                {text_id:text_id},
+                function(data){
+                    if(data==1){
+                        location.replace(location.href);
+                    }else{
+                        alert('删除失败');
+                    }
+                }
+            );
+        }
+    </script>
+
+</body></html>

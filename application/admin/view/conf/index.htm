@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html><head>
+	    <meta charset="utf-8">
+    <title>淘淘后台管理系统</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="admin__src/style/bootstrap.css" rel="stylesheet">
+    <link href="admin__src/style/font-awesome.css" rel="stylesheet">
+    <link href="admin__src/style/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="admin__src/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="admin__src/style/demo.css" rel="stylesheet">
+    <link href="admin__src/style/typicons.css" rel="stylesheet">
+    <link href="admin__src/style/animate.css" rel="stylesheet">
+    
+</head>
+<body>
+	<!-- 头部 -->
+	{include file="common/top"}
+	<!-- /头部 -->
+	
+	<div class="main-container container-fluid">
+		<div class="page-container">
+			            <!-- Page Sidebar -->
+           {include file="common/left"}
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                                        <li>
+                        <a href="{:url('admin/home/index')}">控制面板</a>
+                    </li>
+                                        <li>
+                        <a href="{:url('lists')}">配置</a>
+                    </li>
+                                        <li class="active">配置</li>
+                                        </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+                    
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                        <div class="widget">
+                <div class="widget  radius-bordered">
+                                        <div class="widget-header">
+                                            <span class="widget-caption">配置</span>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="docs-example">
+                                                <ul class="nav nav-tabs tabs-flat">
+                                                    <li class="active"><a href="#info-tab" data-toggle="tab">店铺配置</a></li>
+                                                    <li class=""><a href="#address-tab" data-toggle="tab">商品配置</a></li>
+                                                </ul>
+
+                                                <form id="accountForm" method="post" class="form-horizontal bv-form" novalidate="novalidate" enctype="multipart/form-data">
+                                                    <div class="tab-content tabs-flat">
+                                                        <div class="tab-pane active" id="info-tab">
+                        {volist name="info" id="vo"}
+                        {if condition="$vo['area'] eq 1"}
+                            <div class="form-group">
+                                <label for="username" class="col-sm-2 control-label no-padding-right">{$vo.title}</label>
+                                <div class="col-sm-6">
+                                    <!-- 单行文本 -->
+                                    {if condition="$vo['mold'] eq 'text'"}
+                                    <input class="form-control" id="username" placeholder="" name="{$vo.name}" required="" value="{$vo.value}" type="text">
+                                    {/if}
+
+                                    <!-- 单选按钮 -->
+                                    {if condition="$vo['mold'] eq 'radio'"}
+                                    <?php $arr=explode(',',$vo['values']); ?>
+                                    <?php foreach($arr as $k=>$v){ ?>
+                                    <label>
+                                            <input {if condition="$vo['value'] eq $v"}checked="checked"{/if} name="{$vo.name}" value="{$v}" class="inverted" type="radio">
+                                            <span class="text">{$v}</span>&nbsp;&nbsp;
+                                    </label>
+                                    <?php } ?>
+                                    {/if}
+
+                                    <!-- 复选按钮 -->
+                                    {if condition="$vo['mold'] eq 'checkbox'"}
+                                    <?php $arr=explode(',',$vo['values']); ?>
+                                    <?php $array=explode(',',$vo['value']); ?>
+                                    <?php foreach($arr as $k=>$v){ ?>
+                                    <label>
+                                            <input name="{$vo.name}[]"
+                                            <?php
+                                            if(in_array($v,$array)){
+                                                echo "checked='checked'";
+                                            }
+                                            ?>
+                                            class="colored-blue" type="checkbox" value="{$v}">
+                                            <span class="text">{$v}</span>&nbsp;&nbsp;
+                                    </label>
+                                    <?php } ?>
+                                    {/if}
+
+                                    <!-- 下拉菜单 -->
+                                    {if condition="$vo['mold'] eq 'select'"}
+                                    <?php $arr=explode(',',$vo['values']); ?>
+                                    <label>
+                                        <select name="{$vo.name}">
+                                    <?php foreach($arr as $k=>$v){ ?>
+                                            <option {if condition="$vo['value'] eq $v"}selected="selected"{/if} value="{$v}">{$v}</option>
+                                    <?php } ?>
+                                        </select>
+                                    </label>
+                                    {/if}
+
+                                    <!-- 文本域 -->
+                                    {if condition="$vo['mold'] eq 'textarea'"}
+                                    <textarea name="{$vo.name}" class="form-control">{$vo.value}</textarea>
+                                    {/if}
+
+                                    <!-- 附件 -->
+                                    {if condition="$vo['mold'] eq 'file'"}
+                                    <input name="{$vo.name}" type="file" >
+                                    {if condition="$vo['value'] neq ''"}
+                                    <br />
+                                        <img width="100px" height="100px" src="FILE_CONF{$vo.value}">
+                                    {/if}
+                                    {/if}
+
+                                </div>
+                            </div>
+                            {/if}
+                        {/volist}
+                                                        </div>
+                                        <div class="tab-pane" id="address-tab">
+                        {volist name="info" id="vo"}
+                        {if condition="$vo['area'] eq 2"}
+                            <div class="form-group">
+                                <label for="username" class="col-sm-2 control-label no-padding-right">{$vo.title}</label>
+                                <div class="col-sm-6">
+                                    <!-- 单行文本 -->
+                                    {if condition="$vo['mold'] eq 'text'"}
+                                    <input class="form-control" id="username" placeholder="" name="{$vo.name}" required="" value="{$vo.value}" type="text">
+                                    {/if}
+
+                                    <!-- 单选按钮 -->
+                                    {if condition="$vo['mold'] eq 'radio'"}
+                                    <?php $arr=explode(',',$vo['values']); ?>
+                                    <?php foreach($arr as $k=>$v){ ?>
+                                    <label>
+                                            <input {if condition="$vo['value'] eq $v"}checked="checked"{/if} name="{$vo.name}" value="{$v}" class="inverted" type="radio">
+                                            <span class="text">{$v}</span>&nbsp;&nbsp;
+                                    </label>
+                                    <?php } ?>
+                                    {/if}
+
+                                    <!-- 复选按钮 -->
+                                    {if condition="$vo['mold'] eq 'checkbox'"}
+                                    <?php $arr=explode(',',$vo['values']); ?>
+                                    <?php $array=explode(',',$vo['value']); ?>
+                                    <?php foreach($arr as $k=>$v){ ?>
+                                    <label>
+                                            <input name="{$vo.name}[]"
+                                            <?php
+                                            if(in_array($v,$array)){
+                                                echo "checked='checked'";
+                                            }
+                                            ?>
+                                            class="colored-blue" type="checkbox" value="{$v}">
+                                            <span class="text">{$v}</span>&nbsp;&nbsp;
+                                    </label>
+                                    <?php } ?>
+                                    {/if}
+
+                                    <!-- 下拉菜单 -->
+                                    {if condition="$vo['mold'] eq 'select'"}
+                                    <?php $arr=explode(',',$vo['values']); ?>
+                                    <label>
+                                        <select name="{$vo.name}">
+                                    <?php foreach($arr as $k=>$v){ ?>
+                                            <option {if condition="$vo['value'] eq $v"}selected="selected"{/if} value="{$v}">{$v}</option>
+                                    <?php } ?>
+                                        </select>
+                                    </label>
+                                    {/if}
+
+                                    <!-- 文本域 -->
+                                    {if condition="$vo['mold'] eq 'textarea'"}
+                                    <textarea name="{$vo.name}" class="form-control">{$vo.value}</textarea>
+                                    {/if}
+
+                                    <!-- 附件 -->
+                                    {if condition="$vo['mold'] eq 'file'"}
+                                    <input name="{$vo.name}" type="file" >
+                                    {if condition="$vo['value'] neq ''"}
+                                    <br />
+                                        <img width="100px" height="100px" src="FILE_CONF{$vo.value}">
+                                    {/if}
+                                    {/if}
+
+                                </div>
+                            </div>
+                            {/if}
+                        {/volist}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-default">保存信息</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+		</div>	
+	</div>
+
+	    <!--Basic Scripts-->
+    <script src="admin__src/style/jquery_002.js"></script>
+    <script src="admin__src/style/bootstrap.js"></script>
+    <script src="admin__src/style/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="admin__src/style/beyond.js"></script>
+    
+
+
+</body></html>
